@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nerov Ban</title>
+    <style>
+        body {
+            background-color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.5s;
+        }
+        .nero {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .button:disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+        .device-info {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .telegram-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .telegram-link img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="nero">NEROW BAN</div>
+<button class="button" onclick="checkSoftware(this)">Проверить на софт</button>
+
+<div id="device-info" class="device-info"></div>
+
+<a href="https://t.me/webnyse" class="telegram-link" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"> @webnyse
+</a>
+
+<script>
+    function checkSoftware(button) {
+        button.disabled = true;
+        button.textContent = "Загрузка...";
+
+        setTimeout(() => {
+            document.body.style.backgroundColor = "green";
+            button.textContent = "Проверка завершена-чист";
+            showDeviceInfo();
+        }, 3000);
+    }
+
+    function showDeviceInfo() {
+        let userAgent = navigator.userAgent;
+        let iosVersion = userAgent.match(/OS (\d+_\d+)/);
+        let deviceModel = "Неизвестное устройство";
+
+        if (/iPhone/.test(userAgent)) deviceModel = "iPhone";
+        else if (/iPad/.test(userAgent)) deviceModel = "iPad";
+        else if (/iPod/.test(userAgent)) deviceModel = "iPod";
+
+        let version = iosVersion ? iosVersion[1].replace("_", ".") : "Неизвестно";
+
+        document.getElementById("device-info").textContent = `Устройство: ${deviceModel}, iOS: ${version}`;
+    }
+</script>
+</body>
+</html>
