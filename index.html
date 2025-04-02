@@ -31,25 +31,20 @@
             background-color: gray;
             cursor: not-allowed;
         }
-        .device-info {
+        .device-info, .extra-checks {
             margin-top: 20px;
             font-size: 16px;
             font-weight: bold;
         }
-        .telegram-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
-            text-decoration: none;
-            color: black;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .telegram-link img {
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
+        .remove-button {
+            padding: 5px 10px;
+            margin-left: 10px;
+            font-size: 14px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -58,7 +53,7 @@
 <button class="button" onclick="checkSoftware(this)">Проверить на софт</button>
 
 <div id="device-info" class="device-info"></div>
-<div id="extra-checks" class="device-info"></div>
+<div id="extra-checks" class="extra-checks"></div>
 
 <a href="https://t.me/webnyse" class="telegram-link" target="_blank">
     <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"> @webnyse
@@ -74,6 +69,7 @@
             button.textContent = "Проверка завершена - чист";
             showDeviceInfo();
             checkForApps();
+            checkSearchKeywords();
         }, 3000);
     }
 
@@ -95,10 +91,13 @@
         let checkUrls = {
             "TestFlight": "itms-beta://",
             "Shortcuts": "shortcuts://",
-            "Cydia (Jailbreak)": "cydia://"
+            "Cydia (Jailbreak)": "cydia://",
+            "G-Box": "gbox://"
         };
 
-        let results = [];
+        let resultsContainer = document.getElementById("extra-checks");
+        resultsContainer.innerHTML = "";
+
         Object.keys(checkUrls).forEach(app => {
             let iframe = document.createElement("iframe");
             iframe.style.display = "none";
@@ -107,15 +106,29 @@
 
             setTimeout(() => {
                 if (iframe.parentNode) {
-                    results.push(`${app}: Не найдено`);
+                    let resultElement = document.createElement("div");
+                    resultElement.innerHTML = `${app}: Не найдено <button class='remove-button' onclick='removeEntry(this)'>Удалить</button>`;
+                    resultsContainer.appendChild(resultElement);
                     document.body.removeChild(iframe);
                 }
             }, 1500);
         });
+    }
 
-        setTimeout(() => {
-            document.getElementById("extra-checks").innerHTML = results.join("<br>");
-        }, 2000);
+    function checkSearchKeywords() {
+        let forbiddenKeywords = ["jailbreak", "cydia", "TestFlight", "G-Box", "bypass", "hacking"];
+        let foundKeywords = forbiddenKeywords.filter(keyword => document.referrer.includes(keyword));
+
+        let resultsContainer = document.getElementById("extra-checks");
+        foundKeywords.forEach(keyword => {
+            let resultElement = document.createElement("div");
+            resultElement.innerHTML = `Найдено ключевое слово: ${keyword} <button class='remove-button' onclick='removeEntry(this)'>Удалить</button>`;
+            resultsContainer.appendChild(resultElement);
+        });
+    }
+
+    function removeEntry(button) {
+        button.parentElement.remove();
     }
 </script>
 </body>
