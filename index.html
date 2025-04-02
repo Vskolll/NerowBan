@@ -3,18 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nerov Ban</title>
+    <title>VCKOLL&NEROV BAN</title>
     <style>
         body {
-            background-color: white;
+            background: linear-gradient(135deg, white, #8A2BE2);
+            background-size: 400% 400%;
+            animation: bodyGradientAnimation 6s infinite alternate;
             text-align: center;
             font-family: Arial, sans-serif;
-            transition: background-color 0.5s;
+            transition: background 0.5s;
         }
-        .nero {
-            font-size: 2em;
+        @keyframes bodyGradientAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        .vckoll-nerov {
+            font-size: 2.5em;
             font-weight: bold;
             margin-top: 20px;
+            background: linear-gradient(90deg, #ff0000, #ff7300, #ffeb00, #47ff00, #00ffdd, #0047ff, #a200ff);
+            background-size: 400% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientAnimation 3s infinite linear;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
         .button {
             padding: 10px 20px;
@@ -36,6 +51,20 @@
             font-size: 16px;
             font-weight: bold;
         }
+        .indicator {
+            width: 50px;
+            height: 50px;
+            margin: 20px auto;
+            border-radius: 50%;
+            background-color: gray;
+            display: none;
+        }
+        .error-message {
+            font-size: 20px;
+            color: red;
+            display: none;
+            margin-top: 50px;
+        }
         .telegram-link {
             display: flex;
             align-items: center;
@@ -54,40 +83,54 @@
     </style>
 </head>
 <body>
-<div class="nero">NEROW BAN</div>
-<button class="button" onclick="checkSoftware(this)">Проверить на софт</button>
-
-<div id="device-info" class="device-info"></div>
-
-<a href="https://t.me/webnyse" class="telegram-link" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"> @webnyse
-</a>
-
+<div id="content">
+    <div class="vckoll-nerov">VCKOLL&NEROV BAN</div>
+    <button class="button" onclick="checkSoftware(this)">Проверить на софт</button>
+    <div id="device-info" class="device-info"></div>
+    <div id="indicator" class="indicator"></div>
+    <a href="https://t.me/webnyse" class="telegram-link" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"> @webnyse
+    </a>
+</div>
+<div id="error-message" class="error-message">Доступно только для iPhone</div>
 <script>
     function checkSoftware(button) {
         button.disabled = true;
         button.textContent = "Загрузка...";
-
         setTimeout(() => {
-            document.body.style.backgroundColor = "green";
             button.textContent = "Проверка завершена-чист";
             showDeviceInfo();
         }, 3000);
     }
-
     function showDeviceInfo() {
         let userAgent = navigator.userAgent;
         let iosVersion = userAgent.match(/OS (\d+_\d+)/);
         let deviceModel = "Неизвестное устройство";
-
         if (/iPhone/.test(userAgent)) deviceModel = "iPhone";
         else if (/iPad/.test(userAgent)) deviceModel = "iPad";
         else if (/iPod/.test(userAgent)) deviceModel = "iPod";
-
         let version = iosVersion ? iosVersion[1].replace("_", ".") : "Неизвестно";
-
         document.getElementById("device-info").textContent = `Устройство: ${deviceModel}, iOS: ${version}`;
+        showIndicator(version);
     }
+    function showIndicator(version) {
+        let indicator = document.getElementById("indicator");
+        indicator.style.display = "block";
+        let iosVersion = parseFloat(version);
+        if (!isNaN(iosVersion) && iosVersion < 17.5) {
+            indicator.style.backgroundColor = "red";
+        } else {
+            indicator.style.backgroundColor = "green";
+        }
+    }
+    function checkDevice() {
+        let userAgent = navigator.userAgent;
+        if (!/iPhone/.test(userAgent)) {
+            document.getElementById("content").style.display = "none";
+            document.getElementById("error-message").style.display = "block";
+        }
+    }
+    checkDevice();
 </script>
 </body>
 </html>
