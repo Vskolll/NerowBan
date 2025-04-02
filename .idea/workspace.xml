@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2cfff693-b34a-48f6-ae89-8e2bb01bc7d9" name="Changes" comment="1.01.0">
+    <list default="true" id="2cfff693-b34a-48f6-ae89-8e2bb01bc7d9" name="Changes" comment="1.01.02">
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -128,7 +128,23 @@
       <option name="project" value="LOCAL" />
       <updated>1743579967255</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="1.01.01">
+      <option name="closed" value="true" />
+      <created>1743581423266</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1743581423266</updated>
+    </task>
+    <task id="LOCAL-00011" summary="1.01.02">
+      <option name="closed" value="true" />
+      <created>1743581652039</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1743581652039</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -136,6 +152,8 @@
     <MESSAGE value="sa" />
     <MESSAGE value="1" />
     <MESSAGE value="1.01.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.01.0" />
+    <MESSAGE value="1.01.01" />
+    <MESSAGE value="1.01.02" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.01.02" />
   </component>
 </project>
